@@ -1,8 +1,9 @@
 import 'dart:io' show Platform;
 
-import 'package:crypto_tracker/coin_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -50,13 +51,32 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
-  Widget getPicker() {
-    if (Platform.isIOS) {
-      return iOSPicker();
-    } else if (Platform.isAndroid) {
-      return androidDropdown();
+  String bitcoinValueInUSD = '?';
+
+  void getData() async {
+    try {
+      double data = await CoinData().getCoinData();
+      setState(() {
+        bitcoinValueInUSD = data.toStringAsFixed(0);
+      });
+    } catch (e) {
+      print(e);
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+//  Widget getPicker() {
+//    if (Platform.isIOS) {
+//      return iOSPicker();
+//    } else if (Platform.isAndroid) {
+//      return androidDropdown();
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
