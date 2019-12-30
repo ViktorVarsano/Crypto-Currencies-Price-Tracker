@@ -1,4 +1,4 @@
-# crypto_tracker
+# Crypto Tracker
 
 Check all your crypto currencies value easily
 
